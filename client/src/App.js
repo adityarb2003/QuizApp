@@ -22,16 +22,36 @@ function Quiz() {
     }
   }, [token]);
 
+  // Save score when quiz is finished and we have all answers
+  useEffect(() => {
+    if (showScore && answers.length === questions.length) {
+      saveScore();
+    }
+  }, [showScore, answers, questions.length, score]);
+
   const handleAnswer = (selectedOption) => {
-    if (selectedOption === questions[currentQuestion].correctAnswer) {
+    // Check if answer is correct
+    const isCorrect = selectedOption === questions[currentQuestion].correctAnswer;
+    
+    // Update score if correct
+    if (isCorrect) {
       setScore(score + 1);
     }
+    
+    // Record this answer
+    const currentQuestionId = questions[currentQuestion]._id;
+    setAnswers([...answers, {
+      questionId: currentQuestionId,
+      selectedAnswer: selectedOption,
+      isCorrect: isCorrect
+    }]);
+    
+    // Move to next question or finish quiz
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
     } else {
-      console.log('Quiz finished, saving score...');
-      saveScore(); // Ensure this runs
+      console.log('Quiz finished, answers collected:', answers.length + 1);
       setShowScore(true);
     }
   };
@@ -42,12 +62,14 @@ function Quiz() {
     setShowScore(false);
     setAnswers([]);
   };
+
   const saveScore = async () => {
     console.log('Saving score with:', { answers, totalScore: score });
     try {
-      const response = await axios.post('http://localhost:5000/api/quiz/scores', { answers, totalScore: score }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.post('http://localhost:5000/api/quiz/scores', 
+        { answers, totalScore: score }, 
+        { headers: { Authorization: `Bearer ${token}` }}
+      );
       console.log('Score saved successfully:', response.data);
     } catch (error) {
       console.error('Error saving score:', error.response?.data || error.message);
@@ -107,4 +129,3 @@ function App() {
 }
 
 export default App;
-
