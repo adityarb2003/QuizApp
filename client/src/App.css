@@ -1,32 +1,545 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+:root {
+  --primary-color: #ff6b6b;
+  --primary-hover: #ff8e8e;
+  --secondary-color: #4ecdc4;
+  --accent-color: #ffe66d;
+  --text-primary: #2f2f2f;
+  --text-secondary: #6b6b6b;
+  --bg-primary: #ffe8d6;
+  --bg-secondary: #ffd8be;
+  --border-color: #2f2f2f;
+  --card-bg: #f8f9fa;
+  --card-shadow: 0 5px 0 #2f2f2f, 0 10px 20px rgba(0, 0, 0, 0.2);
+  --transition: all 0.2s ease;
+  --pixel-border: 3px solid #2f2f2f;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'VT323', monospace;
+  background-color: var(--bg-primary);
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: 20px;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header and Navigation */
+.app-header {
+  background-color: var(--secondary-color);
+  border-bottom: var(--pixel-border);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-shadow: 3px 3px 0 var(--accent-color);
+  letter-spacing: 1px;
+}
+
+.main-nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: 'Press Start 2P', cursive;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--text-primary);
+  border-radius: 4px;
+  transition: var(--transition);
+  font-size: 0.7rem;
+  background-color: var(--accent-color);
+  box-shadow: 3px 3px 0 var(--text-primary);
+}
+
+.nav-link:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--text-primary);
+}
+
+.nav-link:active {
+  transform: translate(0px, 0px);
+  box-shadow: 0px 0px 0 var(--text-primary);
+}
+
+.user-status {
+  font-family: 'Press Start 2P', cursive;
+  color: var(--text-primary);
+  font-weight: 600;
+  background-color: var(--primary-color);
+}
+
+/* Main Content */
+.app-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Card Components */
+.card {
+  background-color: var(--card-bg);
+  border: var(--pixel-border);
+  border-radius: 4px;
+  box-shadow: var(--card-shadow);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: var(--transition);
+  position: relative;
+}
+
+.quiz-card {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.quiz-header {
+  margin-bottom: 2rem;
+}
+
+.quiz-progress {
+  height: 16px;
+  background-color: #000;
+  border: 2px solid var(--text-primary);
+  border-radius: 0;
+  margin-bottom: 0.75rem;
+  padding: 3px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, 
+    var(--accent-color) 0%, 
+    var(--accent-color) 20%, 
+    var(--primary-color) 20%, 
+    var(--primary-color) 40%,
+    var(--accent-color) 40%, 
+    var(--accent-color) 60%,
+    var(--primary-color) 60%, 
+    var(--primary-color) 80%,
+    var(--accent-color) 80%, 
+    var(--accent-color) 100%);
+  background-size: 20px 100%;
+  border-radius: 0;
+  transition: width 0.3s ease;
+}
+
+.question-counter {
+  font-family: 'Press Start 2P', cursive;
+  text-align: right;
+  font-size: 0.7rem;
+  color: var(--text-primary);
+  margin-top: 10px;
+}
+
+.question-text {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
   text-align: center;
-  margin-top: 50px;
+  line-height: 1.6;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background-color: var(--bg-secondary);
+  border: var(--pixel-border);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.2);
 }
-button {
+
+/* Options styling */
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.option-btn {
+  font-family: 'Press Start 2P', cursive;
+  background: linear-gradient(to bottom, var(--accent-color), #ffd700);
+  border: var(--pixel-border);
+  border-radius: 0;
+  padding: 1.2rem;
+  font-size: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
   display: block;
-  margin: 10px auto;
-  padding: 10px 20px;
-  font-size: 16px;
+  width: 100%;
+  position: relative;
+  color: var(--text-primary);
+  box-shadow: 0 5px 0 #000, 0 5px 10px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
 }
-nav {
-  margin-bottom: 20px;
+
+.option-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 0 #000, 0 8px 15px rgba(0, 0, 0, 0.3);
 }
-nav a {
-  margin: 0 10px;
+
+.option-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #000, 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+.option-btn::before {
+  content: "→";
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.option-btn:hover::before {
+  opacity: 1;
+  left: 20px;
+}
+
+/* Button styling */
+.btn {
+  font-family: 'Press Start 2P', cursive;
+  display: inline-block;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  border: var(--pixel-border);
+  border-radius: 0;
+  background-color: var(--primary-color);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.8rem;
+  position: relative;
+  box-shadow: 0 5px 0 #000, 0 5px 10px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  background: linear-gradient(to bottom, var(--primary-color), #ff4b4b);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 0 #000, 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #000, 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Result card styling */
+.result-card {
+  text-align: center;
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 3rem 2rem;
+  background-color: var(--card-bg);
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ff6b6b' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.score-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0 var(--accent-color);
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.score-number {
+  color: var(--primary-color);
+  font-size: 3rem;
+  text-shadow: 3px 3px 0 #000;
+  position: relative;
+  display: inline-block;
+  animation: scoreGlow 2s infinite alternate;
+}
+
+@keyframes scoreGlow {
+  from { text-shadow: 0 0 5px var(--primary-color); }
+  to { text-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--accent-color); }
+}
+
+.score-divider {
+  margin: 0 0.5rem;
+  color: var(--text-secondary);
+  font-size: 2.5rem;
+}
+
+.total-number {
+  color: var(--text-secondary);
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 0 #000;
+}
+
+/* Admin form styling */
 form input {
+  font-family: 'VT323', monospace;
   display: block;
-  margin: 10px auto;
-  padding: 5px;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: var(--pixel-border);
+  background-color: #fff;
+  font-size: 1.2rem;
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1);
 }
+
+form input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(255, 107, 107, 0.2);
+}
+
+/* Loading animation */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}
+
+.loader {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.loader:before,
+.loader:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
+  animation: pixelLoading 1s infinite alternate;
+}
+
+.loader:after {
+  background-color: var(--secondary-color);
+  animation-delay: 0.5s;
+}
+
+@keyframes pixelLoading {
+  0% {
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0, 0 0, 0 0);
+  }
+  50% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 100% 100%, 0 0, 0 0);
+  }
+  75% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 100%, 0 0);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, 0 0);
+  }
+}
+
+.loader-container p {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+}
+
+/* List styling */
 ul {
   list-style: none;
   padding: 0;
 }
+
 li {
-  margin: 10px 0;
+  font-family: 'VT323', monospace;
+  background-color: var(--bg-secondary);
+  border: var(--pixel-border);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+  font-size: 1.2rem;
 }
+
 li button {
-  margin-left: 10px;
-  display: inline;
+  font-family: 'Press Start 2P', cursive;
+  background-color: #ef4444;
+  color: white;
+  border: 2px solid #000;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.6rem;
+  box-shadow: 2px 2px 0 #000;
+}
+
+li button:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0 #000;
+}
+
+li button:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+/* Footer */
+.app-footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: var(--secondary-color);
+  border-top: var(--pixel-border);
+  color: var(--text-primary);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
+  line-height: 1.8;
+}
+
+/* Correct/Incorrect Answer Animations */
+.correct-answer {
+  background: linear-gradient(to bottom, #9ee493, #57cc99);
+  animation: correctFlash 0.5s;
+}
+
+.incorrect-answer {
+  background: linear-gradient(to bottom, #ff7171, #ff4747);
+  animation: incorrectShake 0.5s;
+}
+
+@keyframes correctFlash {
+  0%, 100% { box-shadow: 0 5px 0 #000; }
+  50% { box-shadow: 0 5px 0 #000, 0 0 20px #57cc99; }
+}
+
+@keyframes incorrectShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+/* Pixel corners for card elements */
+.card::before,
+.question-text::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary-color);
+  top: -5px;
+  left: -5px;
+}
+
+.card::after,
+.question-text::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary-color);
+  bottom: -5px;
+  right: -5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body {
+    font-size: 18px;
+  }
+  
+  .app-header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .main-nav {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .nav-link {
+    font-size: 0.5rem;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  .card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .question-text {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+  
+  .option-btn {
+    padding: 1rem 0.75rem;
+    font-size: 0.7rem;
+  }
+  
+  .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.7rem;
+  }
+  
+  .score-number {
+    font-size: 2.5rem;
+  }
+  
+  .score-divider, .total-number {
+    font-size: 2rem;
+  }
+  
+  .score-title {
+    font-size: 1rem;
+  }
+
+  
 }
